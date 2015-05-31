@@ -1,69 +1,32 @@
-# THREESpot (beta)
+## THREESpot (beta)
 
-## A library that allows you to create easily hotspots in 360 degree photos & videos  
+### A library that allows you to create easily hotspots in 360 degree photos & videos  
 [Example](todo)
 
 
 ### About
 
-The aim of this project is to provide a free, minimalist 360 degree video WebGL player for modern browsers. It is implemented as a jQuery plugin, with a limited interface for controlling video playback, and mouse/scrollwheel controls for zooming and panning.
+The aim of this project is to provide an easy way to integrate interactive spots in 360 WebGL players. The project was tested using non-flat projection.
 
-There is currently no mobile support, but as Chrome and Safari mobile editions enable WebGL, this should be forwards-compatible with them.
+There is a library called Valiant360 that provides an easy way to make a threejs based player, but the original version did not allow the inclusion of hotspots using this library, so in demo/js folder you can find a modified version that allows it.
+
 
 ### Usage 
 
-See the [demo folder](https://github.com/flimshaw/Valiant360/tree/master/demo) or the [example](http://flimshaw.github.io/Valiant360).  Moving the mouse will pan the camera, and the scroll wheel will zoom in and out.
+See the [demo folder](https://github.com/stratdi/threespot.js/tree/master/demo) or the [example](todo).  Click and move the mouse to pan the camera, and the scroll wheel to zoom in and out. Click on hotspots to popup a JavaScript alert.
 
 **Markup**
 
-On the HTML side, create a div to act as your container, and add a data-video-src attribute pointing to the video file you wish to play.
-
-```
-	<div class="valiantContainer" data-video-src="videos/my-video.mp4"></div>
-```
-
-Or, if you wish to use it to view a photo (note: currently must be powers-of-2 resolution (ie. 2048x1024):
-```
-	<div class="valiantContainer" data-photo-src="videos/my-photo.jpg"></div>
-```
+TODO
 
 **Javascript**
 
-More detailed api documentation pending, for now the below explains about all you can do.
+TODO
 
-```
-	// initialize plugin, default options shown
-	$('.valiantContainer').Valiant360({
-		clickAndDrag: false,	// use click-and-drag camera controls
-		flatProjection: false,	// map image to appear flat (often more distorted)
-		fov: 35, 				// initial field of view
-		hideControls: false,	// hide player controls
-		lon: 0, 				// initial lon for camera angle
-		lat: 0, 				// initial lat for camera angle
-		loop: "loop", 			// video loops by default
-		muted: true,			// video muted by default
-		autoplay: true			// video autoplays by default
-	});
-
-	// play video
-	$('.valiantContainer').Valiant360('play');
-
-	// pause video
-	$('.valiantContainer').Valiant360('pause');
-
-	// load new video file
-	$('.valiantContainer').Valiant360('loadVideo', 'path/to/file.mp4');
-
-	// load new photo file
-	$('.valiantContainer').Valiant360('loadPhoto', 'path/to/file.jpg');
-
-```
-
-
-#### 3rd party libraries and their licenses
+### 3rd party libraries and their licenses
 
 The following assets are used in this tool's creation.
 
-+ [JQuery 1.7.2+](http://jquery.com) (MIT License)
-+ [Three.js](http://threejs.org/) + Detector (MIT License)
-+ [Font Awesome](http://fortawesome.github.io/Font-Awesome/) (MIT License)
++ [JQuery 1.11.3+](http://jquery.com) (MIT License)
++ [Three.js](http://threejs.org/) (MIT License)
++ [Valiant360](https://github.com/flimshaw/Valiant360) (MIT License)
