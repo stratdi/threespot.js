@@ -1,0 +1,59 @@
+<html lang="en">
+    <head>
+        <!-- JavaScript libraries -->
+        <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script src="js/three.min.js"></script>
+        <script src="js/threex.domevents.js"/></script>
+        <script src="js/jquery.valiant360.js"/></script>
+        <script src="threespot.js"></script>
+
+        <!-- CSS file -->
+        <link rel="stylesheet" href="css/style.css"></link>
+    </head>
+    
+    <body>
+        
+        <div class="player" data-photo-src="img/photo.jpg" style="width: 100%; height: 100%;"></div>
+        
+        <script type="text/javascript">      
+            THREE.ImageUtils.crossOrigin = "anonymous";
+            
+            $(document).ready(function() {
+                $('.player').Valiant360({
+                    debug: false
+                });
+                
+                var hotspots = new THREESpot(cameras['Valiant360'], renderers['Valiant360'], scenes['Valiant360']);
+                
+                hotspots.addTexture("information", "img/info.png");
+                hotspots.addSize("small", 15, 32, 32);
+                hotspots.addSize("normal", 30, 32, 32);
+                hotspots.addSize("big", 50, 32, 32);
+
+                hotspots.addHotspot("windowleft", 500, 45, 55, "normal", "information");
+                hotspots.addHotspot("windowcenter", 468, 43, 170, "big", "information");
+                hotspots.addHotspot("windowright", 418, 39, 275, "normal", "information");
+                hotspots.addHotspot("hearth", -276, -195, 367, "small", "information");
+                
+                hotspots.rotateHotspot("windowleft", 0, 3.2, 0);
+                hotspots.rotateHotspot("windowcenter", 0, 3.1, 0);
+                hotspots.rotateHotspot("windowright", 0, 3, 0);
+
+                
+                hotspots.addEvent("windowleft", "mouseup", function(){
+                    alert("You clicked in left window");
+                });
+                hotspots.addEvent("windowcenter", "mouseup", function(){
+                    alert("You clicked in center window");
+                });
+                hotspots.addEvent("windowright", "mouseup", function(){
+                    alert("You clicked in right window");
+                });
+                
+            });
+            
+            
+        </script>
+    
+    </body>
+</html>
