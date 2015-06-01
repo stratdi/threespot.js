@@ -1,3 +1,9 @@
+/**
+ * Constructor for object THREESpot
+ * @param {Object} camera   Camera used by three.js to create the player
+ * @param {Object} renderer Renderer used by three.js to create the player
+ * @param {Object} scene    Scene used by three.js to create the player
+ */
 function THREESpot(camera, renderer, scene) {
     this.sizes = {};
     this.textures = {};
