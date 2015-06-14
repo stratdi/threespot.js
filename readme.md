@@ -104,5 +104,5 @@ MIT
 [Threejs]:http://threejs.org/
 [Valiant360]:https://github.com/flimshaw/Valiant360
 [Valiant360 README]: https://github.com/flimshaw/Valiant360/blob/master/README.md
-[Photo example]: http://todo
+[Photo example]: http://stratdi.github.io/demos/threespotjs/photo/photo.html
 [Video example]: http://todo2
