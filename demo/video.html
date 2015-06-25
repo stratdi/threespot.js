@@ -1,0 +1,59 @@
+<html lang="en">
+    <head>
+        <!-- JavaScript libraries -->
+        <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script src="js/three.min.js"></script>
+        <script src="js/threex.domevents.js"/></script>
+        <script src="js/jquery.valiant360.js"/></script>
+        <script src="../threespot.js"></script>
+
+        <!-- CSS file -->
+        <link rel="stylesheet" href="css/style.css"></link>
+    </head>
+    
+    <body>
+        <div class="state"></div>
+        <div class="player" data-video-src="video/video.mp4" style="width: 100%; height: 100%;"></div>
+
+        <script type="text/javascript">      
+            $(".state").hide();
+            THREE.ImageUtils.crossOrigin = "anonymous";
+            
+            $(document).ready(function() {
+                $('.player').Valiant360({
+                    muted:true
+                });
+                
+                var hotspots = new THREESpot(cameras['Valiant360'], renderers['Valiant360'], scenes['Valiant360']);
+
+                hotspots.addTexture("information", "img/info.png");
+                hotspots.addSize("normal", 30, 32, 32);
+                hotspots.addSize("big", 50, 32, 32);
+
+                hotspots.addHotspot("windowcenter", 468, 43, 170, "big", "information");
+                hotspots.rotateHotspot("windowcenter", 0, 3.1, 0);
+                
+                hotspots.addDynamicHotspot("dynamic1", "timeline.txt", "normal", "information");
+                hotspots.addDynamicHotspot("dynamic2", "timeline2.txt", "normal", "information");
+
+                hotspots.rotateHotspot("dynamic1", 0, 3, 0);
+                
+                hotspots.addEvent("windowcenter", "mouseup", function(){
+                    $(".state").slideToggle().delay(500).slideToggle().text("You clicked a static hotspot");
+                });
+                
+                hotspots.addEvent("dynamic1", "mouseup", function(){
+                    $(".state").slideToggle().delay(500).slideToggle().text("You clicked 'dynamic1' hotspot");
+                });
+                
+                hotspots.addEvent("dynamic2", "mouseup", function(){
+                    $(".state").slideToggle().delay(500).slideToggle().text("You clicked 'dynamic2' hotspot");
+                });
+                
+                hotspots.start(true);
+            });
+            
+        </script>
+    
+    </body>
+</html>

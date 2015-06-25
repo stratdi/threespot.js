@@ -13,6 +13,8 @@ var cameras = {};
 var renderers = {};
 var scenes = {};
 
+var fileEditor = "";
+
 var Detector = {
 
         canvas: !! window.CanvasRenderingContext2D,
@@ -117,11 +119,12 @@ three.js r65 or higher
             hideControls: false,
             lon: 0,
             lat: 0,
-            loop: "loop",
+            loop: false,
             muted: false,
             debug: false,
+            editor: false,
             flatProjection: false,
-            autoplay: true,
+            autoplay: true
         };
 
     // The actual plugin constructor
@@ -206,23 +209,7 @@ three.js r65 or higher
             cameras[pluginName] = this._camera;
             renderers[pluginName] = this._renderer;
             
-            // initialize DomEvents for the debug sphere
-            if (this.options.debug){
-                domElement = new THREEx.DomEvents(this._camera , this._renderer.domElement);
-                
-                var sphere = new THREE.SphereGeometry(20, 32, 32);
-                var texture = new THREE.MeshBasicMaterial( 
-                    { color: 0x1abc9c, shading: THREE.FlatShading, 
-                    vertexColors: THREE.VertexColors } );
-                var debugSphere = new THREE.Mesh(sphere, texture);
-                debugSphere.name = 'debugSphere';
-                debugSphere.position.set(500, 0, 3);
-                domElement.addEventListener(debugSphere, 'click', function(){
-                    alert("Position:\n\t· x: "+debugSphere.position.x+"\n\t· y: "+debugSphere.position.y+"\n\t· z: "+debugSphere.position.z);
-                });
-                this._scene.add(debugSphere);
-            }
-            
+    
             // append the rendering element to this div
             $(this.element).append(this._renderer.domElement);
 			
@@ -283,6 +270,96 @@ three.js r65 or higher
                 // set the video src and begin loading
                 this._video.src = $(this.element).attr('data-video-src');
 
+                // initialize DomEvents for the debug sphere
+                if (this.options.debug){
+                    domElement = new THREEx.DomEvents(this._camera , this._renderer.domElement);
+                
+                    var sphere = new THREE.SphereGeometry(20, 32, 32);
+                    var texture = new THREE.MeshBasicMaterial({ 
+                        color: 0x1abc9c, shading: THREE.FlatShading, 
+                        vertexColors: THREE.VertexColors
+                    });
+                
+                    var debugSphere = new THREE.Mesh(sphere, texture);
+                    debugSphere.name = 'debugSphere';
+                    debugSphere.position.set(500, 0, 3);
+                
+                    // Only debug mode
+                    if (!this.options.editor){
+                        domElement.addEventListener(debugSphere, 'click', function(){
+                            alert("Position:\n\t· x: "+debugSphere.position.x
+                                +"\n\t· y: "+debugSphere.position.y
+                                +"\n\t· z: "+debugSphere.position.z
+                                +"\n\nFileFormat: "+debugSphere.position.x+"#"+debugSphere.position.y+"#"+debugSphere.position.z);
+                        });
+                    }
+                
+                    // Editor mode
+                    else {
+                        var video = this._video;
+                        $(".state").hide();
+                        // Hotspot click event
+                        domElement.addEventListener(debugSphere, 'click', function(){
+                            if (!video.ended){
+                                if (!video.paused){
+                                    video.pause();
+                                    $(".state").slideToggle().delay(1500).slideToggle().text("Video paused. Please click again to record time and position.");
+                                }
+
+                                else{
+                                    video.play();
+                                    var line = video.currentTime+"#"
+                                        +debugSphere.position.x+"#"
+                                        +debugSphere.position.y+"#"
+                                        +debugSphere.position.z+"\n";
+
+                                    fileEditor = fileEditor.concat(line);
+                                    $(".state").slideToggle().delay(1500).slideToggle().text("Instant saved!");
+                                    console.log("Instant saved: "+
+                                                "\n\t· time: ",video.currentTime,"s",
+                                                "\n\t· x: ", debugSphere.position.x,
+                                                "\n\t· y: ", debugSphere.position.y,
+                                                "\n\t· z: ", debugSphere.position.z);
+
+                                }
+                            }else {
+                                $(".state").slideToggle().delay(1500).slideToggle().text("Video ended. Click the floppy to save the file.");
+                            }
+                        });
+                        
+                        $(document).keydown(function(e){
+                            if (e.which == 32){
+                                if (!video.ended){
+                                    if (!video.paused){
+                                        video.pause();
+                                        $(".state").slideToggle().delay(1500).slideToggle().text("Video paused. Please click again to record time and position.");
+                                    }
+
+                                    else{
+                                        video.play();
+                                        var line = video.currentTime+"#"
+                                            +debugSphere.position.x+"#"
+                                            +debugSphere.position.y+"#"
+                                            +debugSphere.position.z+"\n";
+
+                                        fileEditor = fileEditor.concat(line);
+                                        $(".state").slideToggle().delay(1500).slideToggle().text("Instant saved!");
+                                        console.log("Instant saved: "+
+                                                    "\n\t· time: ",video.currentTime,"s",
+                                                    "\n\t· x: ", debugSphere.position.x,
+                                                    "\n\t· y: ", debugSphere.position.y,
+                                                    "\n\t· z: ", debugSphere.position.z);
+
+                                    }
+                                }else {
+                                    $(".state").slideToggle().delay(1500).slideToggle().text("Video ended. Click the floppy to save the file.");
+                                }                            
+                            }
+                        });
+                    }
+                    
+                    this._scene.add(debugSphere);
+                }
             }
 
             this._texture.generateMipmaps = false;
@@ -311,7 +388,7 @@ three.js r65 or higher
                 </div> \
             ';
 
-            $(this.element).append(controlsHTML, true);
+            $(this.element).append(controlsHTML);
 
             // hide controls if option is set
             if(this.options.hideControls) {

@@ -1,0 +1,53 @@
+<html lang="en">
+    <head>
+        <!-- JavaScript libraries -->
+        <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script src="js/three.min.js"></script>
+        <script src="js/threex.domevents.js"/></script>
+        <script src="js/jquery.valiant360.js"/></script>
+        <script src="../threespot.js"></script>
+
+        <!-- CSS file -->
+        <link rel="stylesheet" href="css/style.css"></link>
+    </head>
+    
+    <body>
+        <script>
+            function download() {
+                var pom = document.createElement('a');
+                    fileEditor = fileEditor.concat($("video").get(0).currentTime+"#end");
+                    pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(fileEditor));
+                    pom.setAttribute('download', 'timeline.txt');
+
+                    pom.style.display = 'none';
+                    document.body.appendChild(pom);
+
+                    pom.click();
+
+                    document.body.removeChild(pom);
+            }
+        </script>
+        
+        <div class="state"></div>
+        <div class="options" onclick="download()"><img src="img/floppy.png" class="icon"></img></div>
+        <div class="player" data-video-src="video/video.mp4" style="width: 100%; height: 100%;"></div>
+        
+        <script type="text/javascript">      
+            THREE.ImageUtils.crossOrigin = "anonymous";
+            
+            $(document).ready(function() {
+                $('.player').Valiant360({
+                    debug: true,
+                    muted: true,
+                    editor: true
+                });
+                
+                var hotspots = new THREESpot(cameras['Valiant360'], renderers['Valiant360'], scenes['Valiant360']);
+                
+                hotspots.start(true);
+            });
+            
+        </script>
+    
+    </body>
+</html>

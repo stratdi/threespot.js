@@ -25,7 +25,7 @@
                 
                 var hotspots = new THREESpot(cameras['Valiant360'], renderers['Valiant360'], scenes['Valiant360']);
                 
-                hotspots.addTexture("information", "../video1.mp4");
+                hotspots.addTexture("information", "img/info.png");
                 hotspots.addSize("small", 15, 32, 32);
                 hotspots.addSize("normal", 30, 32, 32);
                 hotspots.addSize("big", 50, 32, 32);
@@ -33,7 +33,6 @@
                 hotspots.addHotspot("windowleft", 500, 45, 55, "normal", "information");
                 hotspots.addHotspot("windowcenter", 468, 43, 170, "big", "information");
                 hotspots.addHotspot("windowright", 418, 39, 275, "normal", "information");
-                hotspots.addHotspot("hearth", -276, -195, 367, "small", "information");
                 
                 hotspots.rotateHotspot("windowleft", 0, 3.2, 0);
                 hotspots.rotateHotspot("windowcenter", 0, 3.1, 0);
