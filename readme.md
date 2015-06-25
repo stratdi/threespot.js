@@ -20,7 +20,7 @@ Threespot.js provides the next features:
 
 ### Try it
 * [Photo example]
-* [Video example] (contains static and dynamic hotspots)
+* [Video example]
 * [Graphic editor] 
 
 ### Tech
