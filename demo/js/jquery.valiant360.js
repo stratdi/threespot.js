@@ -222,6 +222,7 @@ three.js r65 or higher
                 // create off-dom video player
                 this._video = document.createElement( 'video' );
                 this._video.style.display = 'none';
+                this._video.setAttribute('crossorigin', 'anonymous');
                 $(this.element).append( this._video );
                 this._video.loop = this.options.loop;
                 this._video.muted = this.options.muted;
