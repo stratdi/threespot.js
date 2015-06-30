@@ -467,7 +467,7 @@ three.js r65 or higher
 
         },
 
-        onMouseMove: function() {
+        onMouseMove: function(event) {
             this._onPointerDownPointerX = event.clientX;
             this._onPointerDownPointerY = -event.clientY;
 
