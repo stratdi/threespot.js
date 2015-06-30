@@ -267,6 +267,15 @@ three.js r65 or higher
                         self._videoReady = true;
                     }
                 });
+                
+                // Video Play Listener, fires after video loads
+                this._video.addEventListener("canplay", function() {
+
+                    if(self.options.autoplay === true) {
+                        self._video.play();
+                        self._videoReady = true;
+                    }
+                });
 
                 // set the video src and begin loading
                 this._video.src = $(this.element).attr('data-video-src');
